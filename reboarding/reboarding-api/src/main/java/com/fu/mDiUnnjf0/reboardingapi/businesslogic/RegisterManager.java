@@ -29,6 +29,7 @@ public class RegisterManager {
         // register request
         final RegisterResponse response = new RegisterResponse();
         response.setWaitingListIndex(0);
+        queueService.register(userName);
         return response;
     }
 

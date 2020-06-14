@@ -6,14 +6,27 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fu.mDiUnnjf0.reboardingapi.businesslogic.EntryManager;
+import com.fu.mDiUnnjf0.reboardingapi.businesslogic.ExitManager;
 import com.fu.mDiUnnjf0.reboardingapi.businesslogic.RegisterManager;
 import com.fu.mDiUnnjf0.reboardingapi.dto.RegisterResponse;
+
+import ch.qos.logback.core.status.StatusManager;
 
 @RestController
 public class TheController {
 
     @Autowired
     private RegisterManager registerManager;
+
+    @Autowired
+    private ExitManager exitManager;
+
+    @Autowired
+    private EntryManager entryManager;
+
+    @Autowired
+    private StatusManager statusManager;
 
     /**
      * This method is for user registration.
@@ -55,8 +68,7 @@ public class TheController {
      */
     @PostMapping("/entry")
     boolean entry(@PathVariable final String userName) {
-        // TODO
-        return false;
+        return entryManager.entryUser(userName);
     }
 
     /**
@@ -70,7 +82,7 @@ public class TheController {
      */
     @PostMapping("/exit")
     void exit(@PathVariable final String userName) {
-        // TODO
+        exitManager.exitUser(userName);
     }
 
 }
