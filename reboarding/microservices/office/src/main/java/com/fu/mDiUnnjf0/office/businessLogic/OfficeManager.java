@@ -32,7 +32,7 @@ public class OfficeManager {
         return officeRepository.existsOfficePersonByUserName(userName);
     }
 
-    public Integer countPeople() {
+    public Integer countPersonsInTheOffice() {
         return officeRepository.countOfficePersonByStatus(Status.ENTERED.getDbEnum());
     }
 }

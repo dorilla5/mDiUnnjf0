@@ -3,12 +3,13 @@ package com.fu.mDiUnnjf0.queue.businessLogic;
 import java.util.Optional;
 
 import com.fu.mDiUnnjf0.queue.entity.Queue;
+import com.fu.mDiUnnjf0.queue.exception.UserNameNotFoundException;
 import com.fu.mDiUnnjf0.queue.repository.QueueRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
- * Business logic class for handling queue operations. Now there is not much logic, but later, who knows...
+ * Business logic class for handling queue operations.
  */
 @Component
 public class QueueManager {
@@ -17,11 +18,7 @@ public class QueueManager {
     private QueueRepository queueRepository;
 
     public Integer getStatus( final String username ) {
-        return queueRepository.findByUserName(username).getIndexOfRegistration();
-    }
-
-    public void delete( final String userName ) {
-        queueRepository.deleteQueueByUserName(userName);
+        return queueRepository.findByUserName(username).map(Queue::getIndexOfRegistration).orElseThrow(UserNameNotFoundException::new);
     }
 
     public void add( final String userName ) {

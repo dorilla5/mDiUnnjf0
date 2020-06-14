@@ -8,9 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface QueueRepository extends JpaRepository<Queue, Long> {
 
-    Queue findByUserName( final String userName);
-
-    void deleteQueueByUserName( final String userName );
+    Optional<Queue> findByUserName( final String userName);
 
     @Query( value = "SELECT max(indexOfRegistration) FROM Queue")
     Optional<Integer> getMaxIndexOfRegistration();

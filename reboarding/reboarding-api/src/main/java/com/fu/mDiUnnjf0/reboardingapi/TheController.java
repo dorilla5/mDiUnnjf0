@@ -34,7 +34,7 @@ public class TheController {
      * 
      * @param userName
      *            the id of the user
-     * @return the RegisterResponse contains the result of the registration
+     * @return the waiting list index of the given user.
      */
     @GetMapping("/status")
     Integer status(@PathVariable final String userName) {
