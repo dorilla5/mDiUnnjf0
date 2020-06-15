@@ -1,19 +1,11 @@
 package com.fu.mDiUnnjf0.reboardingapi.businesslogic.service;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import com.fu.mDiUnnjf0.reboardingapi.exception.UserStatusException;
-
 @Component
-public class OfficeService {
+public class OfficeService extends Service {
 
     private final RestTemplate office = new RestTemplate();
 
@@ -27,25 +19,12 @@ public class OfficeService {
     private String staysInURL;
 
     public void entry(final String userName) {
-        final HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        final HttpEntity<Object> entity = new HttpEntity<Object>(headers);
-
-        final ResponseEntity<String> out = office.exchange(entryURL + userName, HttpMethod.POST, entity, String.class);
-        if (!out.getStatusCode().equals(HttpStatus.OK)) {
-            throw new UserStatusException();
-        }
+        postRequestAndCheckStatus(office, entryURL + userName);
     }
 
     public void exit(final String userName) {
-        final HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        final HttpEntity<Object> entity = new HttpEntity<Object>(headers);
+        postRequestAndCheckStatus(office, entryURL + userName);
 
-        final ResponseEntity<String> out = office.exchange(exitURL + userName, HttpMethod.POST, entity, String.class);
-        if (!out.getStatusCode().equals(HttpStatus.OK)) {
-            throw new UserStatusException();
-        }
     }
 
     public Boolean staysIn(final String userName) {
