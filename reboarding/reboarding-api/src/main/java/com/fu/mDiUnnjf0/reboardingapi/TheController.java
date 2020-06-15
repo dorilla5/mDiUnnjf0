@@ -9,9 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fu.mDiUnnjf0.reboardingapi.businesslogic.EntryManager;
 import com.fu.mDiUnnjf0.reboardingapi.businesslogic.ExitManager;
 import com.fu.mDiUnnjf0.reboardingapi.businesslogic.RegisterManager;
+import com.fu.mDiUnnjf0.reboardingapi.businesslogic.StatusManager;
 import com.fu.mDiUnnjf0.reboardingapi.dto.RegisterResponse;
-
-import ch.qos.logback.core.status.StatusManager;
 
 @RestController
 public class TheController {
@@ -51,8 +50,7 @@ public class TheController {
      */
     @GetMapping("/status")
     Integer status(@PathVariable final String userName) {
-        // TODO throw UserStatusException for the http code
-        return null;
+        return statusManager.status(userName);
     }
 
     /**

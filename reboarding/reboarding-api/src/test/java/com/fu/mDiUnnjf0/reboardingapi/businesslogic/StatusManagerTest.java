@@ -1,5 +1,11 @@
 package com.fu.mDiUnnjf0.reboardingapi.businesslogic;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -19,4 +25,14 @@ public class StatusManagerTest {
     @InjectMocks
     StatusManager toTest;
 
+    @Test
+    public void testUserStatus() {
+        final String userName = "Jani";
+
+        when(queueServiceMock.status(userName)).thenReturn(1);
+
+        assertEquals(1, toTest.status(userName));
+
+        verify(queueServiceMock, times(1)).status(userName);
+    }
 }
