@@ -1,7 +1,6 @@
 package com.fu.mDiUnnjf0.reboardingapi.businesslogic;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.fu.mDiUnnjf0.reboardingapi.businesslogic.service.OfficeService;
@@ -17,13 +16,10 @@ public class RegisterManager {
     @Autowired
     OfficeService officeService;
 
-    @Value("${officeCapacity}")
-    private int officeCapacity;
-    @Value("${maxRatio}")
-    private double maxRatio;
+    @Autowired
+    StatusManager statusManager;
 
     public RegisterResponse register(final String userName) {
-        final int officeUserCount = officeService.count();
         boolean alreadyOnTheList = false;
         try {
             final int status = queueService.status(userName);
@@ -31,18 +27,17 @@ public class RegisterManager {
         } catch (final UserStatusException exeption) {
             // nothing to do
         }
-        if (alreadyOnTheList || officeService.staysIn(userName)) {
-            throw new UserStatusException();
+        if (alreadyOnTheList) {
+            throw new UserStatusException("Sent user was already regitered");
+        }
+        if (officeService.staysIn(userName)) {
+            throw new UserStatusException("Sent user is in the office currently");
         }
         queueService.register(userName);
-        return buildRegisterResponseFromStatus(queueService.status(userName), officeUserCount);
-    }
-
-    private RegisterResponse buildRegisterResponseFromStatus(final int status, final int officeUsercount) {
+        final int waitingListIndex = statusManager.status(userName);
         final RegisterResponse response = new RegisterResponse();
-        final int freePlaces = (int) (maxRatio * officeCapacity - officeUsercount);
-        response.setSucceed(status <= freePlaces);
-        response.setWaitingListIndex(Math.max(0, status - freePlaces));
+        response.setSucceed(waitingListIndex == 0);
+        response.setWaitingListIndex(waitingListIndex);
         return response;
     }
 

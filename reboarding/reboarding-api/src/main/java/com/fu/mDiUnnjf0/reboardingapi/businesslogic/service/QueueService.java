@@ -1,6 +1,7 @@
 package com.fu.mDiUnnjf0.reboardingapi.businesslogic.service;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -16,11 +17,11 @@ public class QueueService extends Service {
     private String registerURL;
 
     public Integer status(final String userName) {
-        final String body = postRequestAndCheckStatus(queue, statusURL + userName);
+        final String body = postRequestAndCheckStatus(queue, statusURL + userName, HttpMethod.GET);
         return Integer.parseInt(body);
     }
 
     public void register(final String userName) {
-        postRequestAndCheckStatus(queue, registerURL + userName);
+        postRequestAndCheckStatus(queue, registerURL + userName, HttpMethod.POST);
     }
 }

@@ -10,6 +10,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import com.fu.mDiUnnjf0.reboardingapi.businesslogic.service.OfficeService;
 import com.fu.mDiUnnjf0.reboardingapi.businesslogic.service.QueueService;
@@ -29,10 +30,17 @@ public class StatusManagerTest {
     public void testUserStatus() {
         final String userName = "Jani";
 
-        when(queueServiceMock.status(userName)).thenReturn(1);
+        ReflectionTestUtils.setField(toTest, "officeCapacity", 2);
+        ReflectionTestUtils.setField(toTest, "maxRatio", 1);
 
-        assertEquals(1, toTest.status(userName));
+        when(officeServiceMock.count()).thenReturn(1);
+
+        when(queueServiceMock.status(userName)).thenReturn(5);
+
+        assertEquals(4, toTest.status(userName));
 
         verify(queueServiceMock, times(1)).status(userName);
+        verify(officeServiceMock, times(1)).count();
+
     }
 }

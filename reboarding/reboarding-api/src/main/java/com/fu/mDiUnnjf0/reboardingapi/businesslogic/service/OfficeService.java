@@ -1,6 +1,7 @@
 package com.fu.mDiUnnjf0.reboardingapi.businesslogic.service;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -19,11 +20,11 @@ public class OfficeService extends Service {
     private String staysInURL;
 
     public void entry(final String userName) {
-        postRequestAndCheckStatus(office, entryURL + userName);
+        postRequestAndCheckStatus(office, entryURL + userName, HttpMethod.POST);
     }
 
     public void exit(final String userName) {
-        postRequestAndCheckStatus(office, entryURL + userName);
+        postRequestAndCheckStatus(office, entryURL + userName, HttpMethod.POST);
 
     }
 

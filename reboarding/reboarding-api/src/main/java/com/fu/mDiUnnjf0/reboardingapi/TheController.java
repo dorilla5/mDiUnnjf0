@@ -2,8 +2,8 @@ package com.fu.mDiUnnjf0.reboardingapi;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fu.mDiUnnjf0.reboardingapi.businesslogic.EntryManager;
@@ -35,7 +35,7 @@ public class TheController {
      * @return the RegisterResponse contains the result of the registration
      */
     @PostMapping("/register")
-    public RegisterResponse register(@PathVariable final String userName) {
+    public RegisterResponse register(@RequestParam final String userName) {
         return registerManager.register(userName);
     }
 
@@ -49,7 +49,7 @@ public class TheController {
      * @return the waiting list index of the given user.
      */
     @GetMapping("/status")
-    Integer status(@PathVariable final String userName) {
+    Integer status(@RequestParam final String userName) {
         return statusManager.status(userName);
     }
 
@@ -65,7 +65,7 @@ public class TheController {
      * @return the RegisterResponse contains the result of the registration
      */
     @PostMapping("/entry")
-    boolean entry(@PathVariable final String userName) {
+    boolean entry(@RequestParam final String userName) {
         return entryManager.entryUser(userName);
     }
 
@@ -79,7 +79,7 @@ public class TheController {
      * @return the RegisterResponse contains the result of the registration
      */
     @PostMapping("/exit")
-    void exit(@PathVariable final String userName) {
+    void exit(@RequestParam final String userName) {
         exitManager.exitUser(userName);
     }
 
