@@ -1,3 +1,5 @@
+This project offers a solution for the reboarding problem of the companies with office workers after a home office heavy period.
+
 Compile:
 
 cd reboarding
